@@ -1,3 +1,4 @@
+import he from "https://esm.sh/v85/he@1.2.0/he.js";
 import { tag } from "../misc/xml.ts";
 import {
   OmmlAcc,
@@ -556,7 +557,7 @@ export function ommlSsupprToString({ tagName, ctrlpr }: OmmlSsuppr): string {
   return tag(tagName, {});
 }
 export function ommlTToString({ tagName, xmlSpace, text }: OmmlT): string {
-  return tag(tagName, { "xml:space": xmlSpace }, () => text);
+  return tag(tagName, { "xml:space": xmlSpace }, () => he.encode(text));
 }
 
 function ommlMathArgToString({ argpr, children, ctrlpr }: OmmlMathArg): string {
