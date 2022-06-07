@@ -172,6 +172,16 @@ export interface OmmlM extends OmmlElementBase<"m:m"> {
   mpr?: OmmlMpr;
   mr: OmmlMr[];
 }
+export interface OmmlMcs extends OmmlElementBase<"m:mcs"> {
+  mc: OmmlMc[];
+}
+export interface OmmlMc extends OmmlElementBase<"m:mc"> {
+  mcpr?: OmmlMcpr;
+}
+export interface OmmlMcpr extends OmmlElementBase<"m:mcPr"> {
+  count?: number; // 1~255
+  mcjc?: "left" | "center" | "right" | "inside" | "outside";
+}
 export interface OmmlMpr extends OmmlElementBase<"m:mPr"> {
   basejc?: "inline" | "top" | "center" | "bottom" | "inside" | "outside";
   plchide?: boolean;
@@ -180,7 +190,7 @@ export interface OmmlMpr extends OmmlElementBase<"m:mPr"> {
   rsp?: number; // unsigned int
   csp?: number; // unsigned int
   cgp?: number; // unsigned int
-  mcs?: number; // unsigned int
+  mcs?: OmmlMcs;
   ctrlpr?: unknown; // TODO
 }
 export interface OmmlMr extends OmmlElementBase<"m:mr"> {
