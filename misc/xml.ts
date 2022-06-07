@@ -8,7 +8,7 @@ export function tag(
   const childrenText = children?.() ?? "";
   const attrsText = Object.entries(attrs)
     .filter(([, v]) => v != null)
-    .map(([k, v]) => ` ${k}="${he.encode(v!.toString())}"`)
+    .map(([k, v]) => ` ${k}="${he.encode(String(v))}"`)
     .join("");
   if (childrenText.length > 0) {
     return `<${tagName}${attrsText}>${childrenText}</${tagName}>`;
