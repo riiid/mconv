@@ -19,6 +19,9 @@ export type OmmlElement =
   | OmmlLimupppr
   | OmmlMpr
   | OmmlMr
+  | OmmlMcs
+  | OmmlMc
+  | OmmlMcpr
   | OmmlNarypr
   | OmmlPhantpr
   | OmmlRadpr
