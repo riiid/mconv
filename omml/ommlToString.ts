@@ -56,7 +56,6 @@ export default function ommlToString(node?: OmmlElement): string {
   return toStringTable[node.tagName](node as any);
 }
 
-const todo = () => "";
 const toStringTable: {
   [tagName in OmmlElement["tagName"]]: (
     node: Extract<OmmlElement, { tagName: tagName }>,
@@ -114,7 +113,10 @@ export function ommlAccToString({ tagName, accpr, e }: OmmlAcc): string {
   return tag(
     tagName,
     {},
-    () => [ommlToString(accpr), ommlMathArgToString(e)].join(""),
+    () =>
+      [ommlToString(accpr), tag("m:e", {}, () => ommlMathArgToString(e))].join(
+        "",
+      ),
   );
 }
 export function ommlAccprToString({ tagName, chr, ctrlpr }: OmmlAccpr): string {
@@ -124,11 +126,18 @@ export function ommlBarToString({ tagName, barpr, e }: OmmlBar): string {
   return tag(
     tagName,
     {},
-    () => [ommlToString(barpr), ommlMathArgToString(e)].join(""),
+    () =>
+      [ommlToString(barpr), tag("m:e", {}, () => ommlMathArgToString(e))].join(
+        "",
+      ),
   );
 }
 export function ommlBarprToString({ tagName, pos, ctrlpr }: OmmlBarpr): string {
-  return tag(tagName, {}, pos && (() => tag("m:pos", { "m:val": pos })));
+  return tag(
+    tagName,
+    {},
+    pos && (() => tag("m:pos", { "m:val": pos })),
+  );
 }
 export function ommlBorderboxToString(
   { tagName, borderboxpr, e }: OmmlBorderbox,
@@ -136,7 +145,9 @@ export function ommlBorderboxToString(
   return tag(
     tagName,
     {},
-    () => [ommlToString(borderboxpr), ommlMathArgToString(e)].join(""),
+    () =>
+      [ommlToString(borderboxpr), tag("m:e", {}, () => ommlMathArgToString(e))]
+        .join(""),
   );
 }
 export function ommlBorderboxprToString(
@@ -155,21 +166,24 @@ export function ommlBorderboxprToString(
 ): string {
   return tag(tagName, {}, () =>
     [
-      hidetop && tag("m:hideTop", { "m:val": 1 }),
-      hidebot && tag("m:hideBot", { "m:val": 1 }),
-      hideleft && tag("m:hideLeft", { "m:val": 1 }),
-      hideright && tag("m:hideRight", { "m:val": 1 }),
-      strikeh && tag("m:strikeH", { "m:val": 1 }),
-      strikev && tag("m:strikeV", { "m:val": 1 }),
-      strikebltr && tag("m:strikeBLTR", { "m:val": 1 }),
-      striketlbr && tag("m:strikeTLBR", { "m:val": 1 }),
+      hidetop != null && tag("m:hideTop", { "m:val": 1 }),
+      hidebot != null && tag("m:hideBot", { "m:val": 1 }),
+      hideleft != null && tag("m:hideLeft", { "m:val": 1 }),
+      hideright != null && tag("m:hideRight", { "m:val": 1 }),
+      strikeh != null && tag("m:strikeH", { "m:val": 1 }),
+      strikev != null && tag("m:strikeV", { "m:val": 1 }),
+      strikebltr != null && tag("m:strikeBLTR", { "m:val": 1 }),
+      striketlbr != null && tag("m:strikeTLBR", { "m:val": 1 }),
     ].filter(Boolean).join());
 }
 export function ommlBoxToString({ tagName, boxpr, e }: OmmlBox): string {
   return tag(
     tagName,
     {},
-    () => [ommlToString(boxpr), ommlMathArgToString(e)].join(""),
+    () =>
+      [ommlToString(boxpr), tag("m:e", {}, () => ommlMathArgToString(e))].join(
+        "",
+      ),
   );
 }
 export function ommlBoxprToString(
@@ -177,18 +191,22 @@ export function ommlBoxprToString(
 ): string {
   return tag(tagName, {}, () =>
     [
-      opemu && tag("m:opEmu", { "m:val": 1 }),
-      nobreak && tag("m:noBreak", { "m:val": 1 }),
-      diff && tag("m:diff", { "m:val": 1 }),
-      brk && tag("m:brk", { "m:alnAt": brk }),
-      aln && tag("m:aln", { "m:val": 1 }),
+      opemu != null && tag("m:opEmu", { "m:val": 1 }),
+      nobreak != null && tag("m:noBreak", { "m:val": 1 }),
+      diff != null && tag("m:diff", { "m:val": 1 }),
+      brk != null && tag("m:brk", { "m:alnAt": brk }),
+      aln != null && tag("m:aln", { "m:val": 1 }),
     ].filter(Boolean).join());
 }
 export function ommlDToString({ tagName, dpr, e }: OmmlD): string {
   return tag(
     tagName,
     {},
-    () => [ommlToString(dpr), ...e.map(ommlMathArgToString)].join(""),
+    () =>
+      [
+        ommlToString(dpr),
+        e.map((e) => tag("m:e", {}, () => ommlMathArgToString(e))).join(""),
+      ].join(""),
   );
 }
 export function ommlDprToString(
@@ -196,18 +214,22 @@ export function ommlDprToString(
 ): string {
   return tag(tagName, {}, () =>
     [
-      begchr && tag("m:begChr", { "m:val": begchr }),
-      sepchr && tag("m:sepChr", { "m:val": sepchr }),
-      endchr && tag("m:endChr", { "m:val": endchr }),
-      grow && tag("m:grow", { "m:val": 1 }),
-      shp && tag("m:shp", { "m:val": shp }),
+      begchr != null && tag("m:begChr", { "m:val": begchr }),
+      sepchr != null && tag("m:sepChr", { "m:val": sepchr }),
+      endchr != null && tag("m:endChr", { "m:val": endchr }),
+      grow != null && tag("m:grow", { "m:val": 1 }),
+      shp != null && tag("m:shp", { "m:val": shp }),
     ].filter(Boolean).join(""));
 }
 export function ommlEqarrToString({ tagName, eqarrpr, e }: OmmlEqarr): string {
   return tag(
     tagName,
     {},
-    () => [ommlToString(eqarrpr), ...e.map(ommlMathArgToString)].join(""),
+    () =>
+      [
+        ommlToString(eqarrpr),
+        e.map((e) => tag("m:e", {}, () => ommlMathArgToString(e))).join(""),
+      ].join(""),
   );
 }
 export function ommlEqarrprToString(
@@ -215,19 +237,19 @@ export function ommlEqarrprToString(
 ): string {
   return tag(tagName, {}, () =>
     [
-      basejc && tag("m:baseJc", { "m:val": basejc }),
-      maxdist && tag("m:maxDist", { "m:val": 1 }),
-      objdist && tag("m:objDist", { "m:val": 1 }),
-      rsprule && tag("m:rSpRule", { "m:val": rsprule }),
-      rsp && tag("m:rSp", { "m:val": rsp }),
+      basejc != null && tag("m:baseJc", { "m:val": basejc }),
+      maxdist != null && tag("m:maxDist", { "m:val": 1 }),
+      objdist != null && tag("m:objDist", { "m:val": 1 }),
+      rsprule != null && tag("m:rSpRule", { "m:val": rsprule }),
+      rsp != null && tag("m:rSp", { "m:val": rsp }),
     ].join(""));
 }
 export function ommlFToString({ tagName, fpr, num, den }: OmmlF): string {
   return tag(tagName, {}, () =>
     [
       ommlToString(fpr),
-      ommlMathArgToString(num),
-      ommlMathArgToString(den),
+      tag("m:num", {}, () => ommlMathArgToString(num)),
+      tag("m:den", {}, () => ommlMathArgToString(den)),
     ].join(""));
 }
 export function ommlFprToString({ tagName, ctrlpr }: OmmlFpr): string {
@@ -240,7 +262,11 @@ export function ommlFuncToString(
     tagName,
     {},
     () =>
-      [ommlToString(funcpr), ommlMathArgToString(fname), ommlMathArgToString(e)]
+      [
+        ommlToString(funcpr),
+        tag("m:fname", {}, () => ommlMathArgToString(fname)),
+        tag("m:e", {}, () => ommlMathArgToString(e)),
+      ]
         .join(""),
   );
 }
@@ -253,7 +279,7 @@ export function ommlGroupchrToString(
   return tag(tagName, {}, () =>
     [
       ommlToString(groupchrpr),
-      ommlMathArgToString(e),
+      tag("m:e", {}, () => ommlMathArgToString(e)),
     ].join(""));
 }
 export function ommlGroupchrprToString(
@@ -261,9 +287,9 @@ export function ommlGroupchrprToString(
 ): string {
   return tag(tagName, {}, () =>
     [
-      chr && tag("m:chr", { "m:val": chr }),
-      pos && tag("m:pos", { "m:val": pos }),
-      vertjc && tag("m:vertJc", { "m:val": vertjc }),
+      chr != null && tag("m:chr", { "m:val": chr }),
+      pos != null && tag("m:pos", { "m:val": pos }),
+      vertjc != null && tag("m:vertJc", { "m:val": vertjc }),
     ].join(""));
 }
 export function ommlLimlowToString(
@@ -273,7 +299,11 @@ export function ommlLimlowToString(
     tagName,
     {},
     () =>
-      [ommlToString(limlowpr), ommlMathArgToString(e), ommlMathArgToString(lim)]
+      [
+        ommlToString(limlowpr),
+        tag("m:e", {}, () => ommlMathArgToString(e)),
+        tag("m:lim", {}, () => ommlMathArgToString(lim)),
+      ]
         .join(""),
   );
 }
@@ -289,7 +319,11 @@ export function ommlLimuppToString(
     tagName,
     {},
     () =>
-      [ommlToString(limupppr), ommlMathArgToString(e), ommlMathArgToString(lim)]
+      [
+        ommlToString(limupppr),
+        tag("m:e", {}, () => ommlMathArgToString(e)),
+        tag("m:lim", {}, () => ommlMathArgToString(lim)),
+      ]
         .join(""),
   );
 }
@@ -305,7 +339,8 @@ export function ommlMathArgprToString(
     tagName,
     {},
     () =>
-      [argsz && tag("m:argsz", { "m:val": argsz })].filter(Boolean).join(""),
+      [argsz != null && tag("m:argsz", { "m:val": argsz })].filter(Boolean)
+        .join(""),
   );
 }
 export function ommlMToString({ tagName, mpr, mr }: OmmlM): string {
@@ -320,8 +355,8 @@ export function ommlMcprToString({ tagName, count, mcjc }: OmmlMcpr): string {
     {},
     () =>
       [
-        count && tag("m:count", { "m:val": count }),
-        mcjc && tag("m:mcJc", { "m:val": mcjc }),
+        count != null && tag("m:count", { "m:val": count }),
+        mcjc != null && tag("m:mcJc", { "m:val": mcjc }),
       ].filter(Boolean).join(""),
   );
 }
@@ -334,18 +369,22 @@ export function ommlMprToString(
 ): string {
   return tag(tagName, {}, () =>
     [
-      basejc && tag("m:baseJc", { "m:val": basejc }),
-      plchide && tag("m:plcHide", { "m:val": 1 }),
-      rsprule && tag("m:rSpRule", { "m:val": rsprule }),
-      cgprule && tag("m:cGpRule", { "m:val": cgprule }),
-      rsp && tag("m:rSp", { "m:val": rsp }),
-      csp && tag("m:cSp", { "m:val": csp }),
-      cgp && tag("m:cGp", { "m:val": cgp }),
+      basejc != null && tag("m:baseJc", { "m:val": basejc }),
+      plchide != null && tag("m:plcHide", { "m:val": 1 }),
+      rsprule != null && tag("m:rSpRule", { "m:val": rsprule }),
+      cgprule != null && tag("m:cGpRule", { "m:val": cgprule }),
+      rsp != null && tag("m:rSp", { "m:val": rsp }),
+      csp != null && tag("m:cSp", { "m:val": csp }),
+      cgp != null && tag("m:cGp", { "m:val": cgp }),
       ommlToString(mcs),
     ].filter(Boolean).join(""));
 }
 export function ommlMrToString({ tagName, e }: OmmlMr): string {
-  return tag(tagName, {}, () => e.map(ommlMathArgToString).join(""));
+  return tag(
+    tagName,
+    {},
+    () => e.map((e) => tag("m:e", {}, () => ommlMathArgToString(e))).join(""),
+  );
 }
 export function ommlNaryToString(
   { tagName, narypr, sub, sup, e }: OmmlNary,
@@ -356,9 +395,9 @@ export function ommlNaryToString(
     () =>
       [
         ommlToString(narypr),
-        ommlMathArgToString(sub),
-        ommlMathArgToString(sup),
-        ommlMathArgToString(e),
+        tag("m:sub", {}, () => ommlMathArgToString(sub)),
+        tag("m:sup", {}, () => ommlMathArgToString(sup)),
+        tag("m:e", {}, () => ommlMathArgToString(e)),
       ].join(""),
   );
 }
@@ -370,11 +409,11 @@ export function ommlNaryprToString(
     {},
     () =>
       [
-        chr && tag("m:chr", { "m:val": chr }),
-        limloc && tag("m:limLoc", { "m:val": limloc }),
-        grow && tag("m:grow", { "m:val": 1 }),
-        subhide && tag("m:subHide", { "m:val": 1 }),
-        suphide && tag("m:supHide", { "m:val": 1 }),
+        chr != null && tag("m:chr", { "m:val": chr }),
+        limloc != null && tag("m:limLoc", { "m:val": limloc }),
+        grow != null && tag("m:grow", { "m:val": 1 }),
+        subhide != null && tag("m:subHide", { "m:val": 1 }),
+        suphide != null && tag("m:supHide", { "m:val": 1 }),
       ].filter(Boolean).join(""),
   );
 }
@@ -385,7 +424,9 @@ export function ommlPhantToString({ tagName, phantpr, e }: OmmlPhant): string {
   return tag(
     tagName,
     {},
-    () => [ommlToString(phantpr), ommlMathArgToString(e)].join(""),
+    () =>
+      [ommlToString(phantpr), tag("m:e", {}, () => ommlMathArgToString(e))]
+        .join(""),
   );
 }
 export function ommlPhantprToString(
@@ -393,11 +434,11 @@ export function ommlPhantprToString(
 ): string {
   return tag(tagName, {}, () =>
     [
-      show && tag("m:show", { "m:val": 1 }),
-      zerowid && tag("m:zeroWid", { "m:val": 1 }),
-      zeroasc && tag("m:zeroAsc", { "m:val": 1 }),
-      zerodesc && tag("m:zeroDesc", { "m:val": 1 }),
-      transp && tag("m:transp", { "m:val": 1 }),
+      show != null && tag("m:show", { "m:val": 1 }),
+      zerowid != null && tag("m:zeroWid", { "m:val": 1 }),
+      zeroasc != null && tag("m:zeroAsc", { "m:val": 1 }),
+      zerodesc != null && tag("m:zeroDesc", { "m:val": 1 }),
+      transp != null && tag("m:transp", { "m:val": 1 }),
     ].filter(Boolean).join(""));
 }
 export function ommlRToString({ tagName, rpr, children }: OmmlR): string {
@@ -408,7 +449,11 @@ export function ommlRadToString({ tagName, radpr, deg, e }: OmmlRad): string {
     tagName,
     {},
     () =>
-      [ommlToString(radpr), ommlMathArgToString(deg), ommlMathArgToString(e)]
+      [
+        ommlToString(radpr),
+        tag("m:deg", {}, () => ommlMathArgToString(deg)),
+        tag("m:e", {}, () => ommlMathArgToString(e)),
+      ]
         .join(""),
   );
 }
@@ -417,7 +462,7 @@ export function ommlRadprToString(
 ): string {
   return tag(tagName, {}, () =>
     [
-      deghide && tag("m:degHide", { "m:val": 1 }),
+      deghide != null && tag("m:degHide", { "m:val": 1 }),
     ].filter(Boolean).join(""));
 }
 export function ommlRprToString(
@@ -425,19 +470,24 @@ export function ommlRprToString(
 ): string {
   return tag(tagName, {}, () =>
     [
-      lit && tag("m:lit", { "m:val": 1 }),
-      nor && tag("m:nor", { "m:val": 1 }),
-      scr && tag("m:scr", { "m:val": 1 }),
-      sty && tag("m:sty", { "m:val": 1 }),
-      brk && tag("m:brk", { "m:alnAt": brk }),
-      aln && tag("m:aln", { "m:val": 1 }),
+      lit != null && tag("m:lit", { "m:val": 1 }),
+      nor != null && tag("m:nor", { "m:val": 1 }),
+      scr != null && tag("m:scr", { "m:val": 1 }),
+      sty != null && tag("m:sty", { "m:val": 1 }),
+      brk != null && tag("m:brk", { "m:alnAt": brk }),
+      aln != null && tag("m:aln", { "m:val": 1 }),
     ].filter(Boolean).join(""));
 }
 export function ommlSpreToString({ tagName, sub, sup, e }: OmmlSpre): string {
   return tag(
     tagName,
     {},
-    () => [sub, sup, e].map(ommlMathArgToString).join(""),
+    () =>
+      [
+        tag("m:sub", {}, () => ommlMathArgToString(sub)),
+        tag("m:sup", {}, () => ommlMathArgToString(sup)),
+        tag("m:e", {}, () => ommlMathArgToString(e)),
+      ].join(""),
   );
 }
 export function ommlSpreprToString({ tagName, ctrlpr }: OmmlSprepr): string {
@@ -452,8 +502,8 @@ export function ommlSsubToString(
     () =>
       [
         ommlToString(ssubpr),
-        ommlMathArgToString(e),
-        ommlMathArgToString(sub),
+        tag("m:e", {}, () => ommlMathArgToString(e)),
+        tag("m:sub", {}, () => ommlMathArgToString(sub)),
       ].join(""),
   );
 }
@@ -469,9 +519,9 @@ export function ommlSsubsupToString(
     () =>
       [
         ommlToString(ssubsuppr),
-        ommlMathArgToString(e),
-        ommlMathArgToString(sub),
-        ommlMathArgToString(sup),
+        tag("m:e", {}, () => ommlMathArgToString(e)),
+        tag("m:sub", {}, () => ommlMathArgToString(sub)),
+        tag("m:sup", {}, () => ommlMathArgToString(sup)),
       ].join(""),
   );
 }
@@ -481,7 +531,10 @@ export function ommlSsubsupprToString(
   return tag(
     tagName,
     {},
-    () => [alnscr && tag("m:alnScr", { "m:val": 1 })].filter(Boolean).join(""),
+    () =>
+      [alnscr != null && tag("m:alnScr", { "m:val": 1 })].filter(Boolean).join(
+        "",
+      ),
   );
 }
 export function ommlSsupToString(
@@ -491,7 +544,11 @@ export function ommlSsupToString(
     tagName,
     {},
     () =>
-      [ommlToString(ssuppr), ommlMathArgToString(e), ommlMathArgToString(sup)]
+      [
+        ommlToString(ssuppr),
+        tag("m:e", {}, () => ommlMathArgToString(e)),
+        tag("m:sup", {}, () => ommlMathArgToString(sup)),
+      ]
         .join(""),
   );
 }
