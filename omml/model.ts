@@ -245,7 +245,7 @@ export interface OmmlSprepr extends OmmlElementBase<"m:sPrePr"> {
   ctrlpr?: unknown; // TODO
 }
 export interface OmmlSsub extends OmmlElementBase<"m:sSub"> {
-  ssubpr?: OmmlSprepr;
+  ssubpr?: OmmlSsubpr;
   e: OmmlMathArg;
   sub: OmmlMathArg;
 }
@@ -263,7 +263,7 @@ export interface OmmlSsubsuppr extends OmmlElementBase<"m:sSubSupPr"> {
   ctrlpr?: unknown; // TODO
 }
 export interface OmmlSsup extends OmmlElementBase<"m:sSup"> {
-  ssuppr?: OmmlSprepr;
+  ssuppr?: OmmlSsuppr;
   e: OmmlMathArg;
   sup: OmmlMathArg;
 }
