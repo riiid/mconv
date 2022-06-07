@@ -67,7 +67,7 @@ export interface OmmlAccpr extends OmmlElementBase<"m:accPr"> {
   ctrlpr?: unknown; // TODO
 }
 export interface OmmlBar extends OmmlElementBase<"m:bar"> {
-  barpr?: unknown; // TODO
+  barpr?: OmmlBarpr;
   e: OmmlMathArg;
 }
 export interface OmmlBarpr extends OmmlElementBase<"m:barPr"> {
@@ -75,7 +75,7 @@ export interface OmmlBarpr extends OmmlElementBase<"m:barPr"> {
   ctrlpr?: unknown; // TODO
 }
 export interface OmmlBox extends OmmlElementBase<"m:box"> {
-  boxpr?: unknown; // TODO
+  boxpr?: OmmlBoxpr;
   e: OmmlMathArg;
 }
 export interface OmmlBoxpr extends OmmlElementBase<"m:boxPr"> {
