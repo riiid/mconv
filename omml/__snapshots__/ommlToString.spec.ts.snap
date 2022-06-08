@@ -1,3 +1,5 @@
 export const snapshot = {};
 
 snapshot[`ommlToString 1`] = `"<m:oMath><m:r><m:t>23x + 9</m:t></m:r><m:sSup><m:sSupPr/><m:e><m:r><m:t>x</m:t></m:r></m:e><m:sup><m:r><m:t>9999</m:t></m:r></m:sup></m:sSup><m:r><m:t>= 3</m:t></m:r></m:oMath>"`;
+
+snapshot[`ommlToString 2`] = `"<m:oMath><m:r><m:t>23x + 9</m:t></m:r><m:sSup><m:sSupPr/><m:e><m:r><m:t>x</m:t></m:r></m:e><m:sup><m:r><m:t>9999</m:t></m:r></m:sup></m:sSup><m:r><m:t>= 3</m:t></m:r></m:oMath>"`;
